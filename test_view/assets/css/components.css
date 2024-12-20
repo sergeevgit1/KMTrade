@@ -67,7 +67,6 @@
     margin: var(--element-spacing) auto;
     margin-bottom: 30px;
     width: 100%;
-    max-width: var(--mainbar-width);
     display: flex;
     align-items: center;
 }
