@@ -197,7 +197,7 @@ get_header();
 
         <!-- Основной контент -->
         <div class="flex-1">
-            <!-- Заголовок, результ��ты, поиск и сортировка - всегда видимы -->
+            <!-- Заголовок, результаты, поиск и сортировка - всегда видимы -->
             <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
                 <div class="flex flex-col md:flex-row items-center gap-4">
                     <!-- Заголовок и количество -->
@@ -321,7 +321,7 @@ get_header();
             </div>
 
             <?php
-            // Получаем все т��вары с учетом фильтров
+            // Получаем все товары с учетом фильтров
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             
             // Базовые параметры запроса
@@ -450,7 +450,7 @@ get_header();
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    ��аименование
+                                    Наименование
                                 </th>
                                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Действия
@@ -619,7 +619,7 @@ const manufacturers = <?php echo json_encode($manufacturers); ?>;
 
 function updateModels(manufacturer) {
     const modelSelect = document.getElementById('crane-model-select');
-    modelSelect.innerHTML = '<option value="">��ыберите модель</option>';
+    modelSelect.innerHTML = '<option value="">Выберите модель</option>';
     
     if (manufacturer && manufacturers[manufacturer]) {
         manufacturers[manufacturer].models.forEach(model => {
@@ -659,7 +659,7 @@ function validateQuantity(input) {
     input.value = Math.max(1, Math.min(9999, parseInt(input.value) || 1));
 }
 
-// Обновленная функция ��обавления в заказ
+// Обновленная функция добавления в заказ
 function addToOrder(partName, quantity) {
     const selectedParts = JSON.parse(localStorage.getItem('selectedParts') || '[]');
     quantity = parseInt(quantity) || 1;

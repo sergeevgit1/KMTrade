@@ -289,7 +289,7 @@ function crane_parts_customize_register($wp_customize) {
         ));
 
         $wp_customize->add_control('404_link_' . $i . '_icon', array(
-            'label' => 'Ссылка ' . $i . ' - Иконка',
+            'label' => 'Ссылка ' . $i . ' - ��конка',
             'section' => '404_settings',
             'type' => 'select',
             'choices' => array(
@@ -402,7 +402,7 @@ function crane_parts_customize_register($wp_customize) {
         'type' => 'textarea'
     ));
 
-    // Как н��йти запчасть
+    // Как найти запчасть
     $wp_customize->add_setting('how_to_find_title', array(
         'default' => 'Как найти нужную запчасть?',
         'sanitize_callback' => 'sanitize_text_field'
@@ -487,7 +487,7 @@ function crane_parts_customize_register($wp_customize) {
         'type' => 'text'
     ));
 
-    // Контактные данные
+    // Контктные данные
     $wp_customize->add_setting('contact_phone', array(
         'default' => '',
         'sanitize_callback' => 'sanitize_text_field'
@@ -520,6 +520,63 @@ function crane_parts_customize_register($wp_customize) {
         'section' => 'homepage_settings',
         'type' => 'text'
     ));
+
+    // Секция FAQ
+    $wp_customize->add_section('faq_settings', array(
+        'title' => 'Настройки FAQ',
+        'priority' => 35,
+    ));
+
+    // Заголовок секции FAQ
+    $wp_customize->add_setting('faq_title', array(
+        'default' => 'Часто задаваемые вопросы',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+
+    $wp_customize->add_control('faq_title', array(
+        'label' => 'Заголовок FAQ',
+        'section' => 'faq_settings',
+        'type' => 'text'
+    ));
+
+    // Подзаголовок секции FAQ
+    $wp_customize->add_setting('faq_subtitle', array(
+        'default' => 'Ответы на популярные вопросы о запчастях для башенных кранов',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+
+    $wp_customize->add_control('faq_subtitle', array(
+        'label' => 'Подзаголовок FAQ',
+        'section' => 'faq_settings',
+        'type' => 'text'
+    ));
+
+    // Добавляем 6 вопросов-ответов
+    for ($i = 1; $i <= 6; $i++) {
+        // Вопрос
+        $wp_customize->add_setting('faq_question_' . $i, array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+
+        $wp_customize->add_control('faq_question_' . $i, array(
+            'label' => 'Вопрос ' . $i,
+            'section' => 'faq_settings',
+            'type' => 'text'
+        ));
+
+        // Ответ
+        $wp_customize->add_setting('faq_answer_' . $i, array(
+            'default' => '',
+            'sanitize_callback' => 'wp_kses_post'
+        ));
+
+        $wp_customize->add_control('faq_answer_' . $i, array(
+            'label' => 'Ответ ' . $i,
+            'section' => 'faq_settings',
+            'type' => 'textarea'
+        ));
+    }
 }
 add_action('customize_register', 'crane_parts_customize_register');
 
@@ -725,7 +782,7 @@ function crane_parts_catalog_settings($wp_customize) {
         ));
 
         $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'catalog_featured_categories', array(
-            'label' => 'Выберите категории дл отбжен��я',
+            'label' => 'Выберите категории для отображения',
             'section' => 'catalog_settings',
             'type' => 'select',
             'multiple' => true,
@@ -862,7 +919,7 @@ function crane_parts_404_page() {
     <?php
 }
 
-// Функция дл получения SVG иконок для 404 страницы
+// Функция для получения SVG иконок для 404 страницы
 function crane_parts_get_404_icon($icon) {
     $icons = array(
         'home' => '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>',
@@ -1165,9 +1222,9 @@ add_action('init', 'register_theme_menus');
 // Кастомный walker для основного меню
 class Primary_Menu_Walker extends Walker_Nav_Menu {
     function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0) {
-        // Проверяем, является ли ��ункт меню каталогом или моим заказом
+        // Проверяем, является ли элемент меню каталогом или моим заказом
         $title_lower = mb_strtolower(trim($item->title));
-        if ($title_lower === 'каталог') {
+        if ($title_lower === 'к��талог') {
             // Пропускаем, так как каталог отображается отдельно слева
             return;
         } elseif ($title_lower === 'мой заказ') {
@@ -1217,7 +1274,7 @@ function element_kran_widgets_init() {
 }
 add_action('widgets_init', 'element_kran_widgets_init');
 
-// Добавляем фильтрацию товаров по категории
+// Добавляем фильтрцию товаров по категории
 function element_kran_filter_products_by_category($query) {
     if (!is_admin() && $query->is_main_query() && isset($_GET['product_cat'])) {
         $tax_query = array(
@@ -1372,7 +1429,7 @@ function handle_parts_order() {
         $message .= "- {$part['name']} ({$part['quantity']} шт.)\n";
     }
 
-    // Отправляем уведомление
+    // О��правляем уведомление
     $admin_email = get_option('admin_email');
     $site_name = get_bloginfo('name');
     
@@ -1402,3 +1459,256 @@ function plural_form($n, $form1, $form2, $form5) {
     if ($n1 == 1) return $form1;
     return $form5;
 }
+
+// Добавляем кастомные поля в товары WooCommerce
+function add_custom_fields_product_tab($tabs) {
+    $tabs['crane_specs'] = array(
+        'label'    => 'Характеристики крана',
+        'target'   => 'crane_specifications',
+        'priority' => 60
+    );
+    return $tabs;
+}
+add_filter('woocommerce_product_data_tabs', 'add_custom_fields_product_tab');
+
+// Добавляем поля в вкладку
+function add_crane_specifications_fields() {
+    echo '<div id="crane_specifications" class="panel woocommerce_options_panel">';
+    
+    // Производитель крана
+    woocommerce_wp_select(array(
+        'id'      => '_crane_manufacturer',
+        'label'   => 'Производитель крана',
+        'options' => array(
+            ''          => 'Выберите производителя',
+            'potain'    => 'Potain',
+            'liebherr'  => 'Liebherr',
+            'zoomlion'  => 'Zoomlion',
+            'comansa'   => 'Comansa'
+        )
+    ));
+    
+    // Модель крана
+    woocommerce_wp_text_input(array(
+        'id'          => '_crane_model',
+        'label'       => 'Модель крана',
+        'placeholder' => 'Например: MC 85'
+    ));
+    
+    // Метки
+    woocommerce_wp_textarea_input(array(
+        'id'          => '_product_labels',
+        'label'       => 'Метки',
+        'placeholder' => 'Введите метки через запятую',
+        'desc_tip'    => true,
+        'description' => 'Метки помогут быстрее находить запчасть. Например: оригинал, новая, б/у'
+    ));
+
+    echo '</div>';
+}
+add_action('woocommerce_product_data_panels', 'add_crane_specifications_fields');
+
+// Сохраняем значения полей
+function save_crane_specifications_fields($post_id) {
+    $crane_manufacturer = isset($_POST['_crane_manufacturer']) ? sanitize_text_field($_POST['_crane_manufacturer']) : '';
+    update_post_meta($post_id, '_crane_manufacturer', $crane_manufacturer);
+    
+    $crane_model = isset($_POST['_crane_model']) ? sanitize_text_field($_POST['_crane_model']) : '';
+    update_post_meta($post_id, '_crane_model', $crane_model);
+    
+    $product_labels = isset($_POST['_product_labels']) ? sanitize_textarea_field($_POST['_product_labels']) : '';
+    update_post_meta($post_id, '_product_labels', $product_labels);
+}
+add_action('woocommerce_process_product_meta', 'save_crane_specifications_fields');
+
+// Добавим функцию для установки категории по умолчанию
+function set_default_catalog_category($query) {
+    if (!is_admin() && $query->is_main_query() && is_post_type_archive('product')) {
+        // Если не выбрана категория, показываем "Все запчасти"
+        if (!isset($_GET['product_cat'])) {
+            $tax_query = array(
+                array(
+                    'taxonomy' => 'product_cat',
+                    'field'    => 'slug',
+                    'terms'    => 'spare-parts', // слаг катего��ии "Все запчасти"
+                    'operator' => 'IN',
+                )
+            );
+            $query->set('tax_query', $tax_query);
+        }
+    }
+}
+add_action('pre_get_posts', 'set_default_catalog_category');
+
+// Добавим создание категории при активации темы
+function create_default_categories() {
+    // Создаем основную категорию "Все запчасти"
+    if (!term_exists('spare-parts', 'product_cat')) {
+        wp_insert_term(
+            'Все запчасти', 
+            'product_cat',
+            array(
+                'slug' => 'spare-parts',
+                'description' => 'Все запчасти для башенных кранов'
+            )
+        );
+    }
+}
+add_action('after_switch_theme', 'create_default_categories');
+
+// Добавляем поддержку Max Mega Menu
+function element_kran_mega_menu_support() {
+    add_theme_support('max-mega-menu');
+}
+add_action('after_setup_theme', 'element_kran_mega_menu_support');
+
+// Настройка стилей для Max Mega Menu
+function element_kran_megamenu_override_default_theme($themes) {
+    $themes["default"] = [
+        'title' => 'Element Kran Theme',
+        'container_background_from' => '#ffffff',
+        'container_background_to' => '#ffffff',
+        'menu_item_align' => 'left',
+        'menu_item_background_hover_from' => '#f97316',
+        'menu_item_background_hover_to' => '#f97316',
+        'menu_item_link_height' => '50px',
+        'menu_item_link_color' => '#374151',
+        'menu_item_link_weight' => 'bold',
+        'menu_item_link_text_align' => 'left',
+        'menu_item_link_color_hover' => '#ffffff',
+        'menu_item_link_padding_left' => '20px',
+        'menu_item_link_padding_right' => '20px',
+        'menu_item_border_color' => '#e5e7eb',
+        'panel_background_from' => '#ffffff',
+        'panel_background_to' => '#ffffff',
+        'panel_width' => '100%',
+        'panel_inner_width' => '1280px',
+        'panel_border_color' => '#e5e7eb',
+        'panel_border_radius' => '0 0 8px 8px',
+        'panel_header_color' => '#111827',
+        'panel_header_text_transform' => 'none',
+        'panel_header_font_size' => '18px',
+        'panel_header_font_weight' => 'bold',
+        'panel_header_margin_bottom' => '16px',
+        'panel_padding_left' => '24px',
+        'panel_padding_right' => '24px',
+        'panel_padding_top' => '24px',
+        'panel_padding_bottom' => '24px',
+        'panel_widget_padding' => '0px',
+        'panel_font_size' => '14px',
+        'panel_font_color' => '#4b5563',
+        'panel_font_family' => 'inherit',
+        'panel_second_level_font_color' => '#374151',
+        'panel_second_level_font_size' => '16px',
+        'panel_second_level_font_weight' => 'bold',
+        'panel_second_level_text_transform' => 'none',
+        'panel_second_level_margin_bottom' => '10px',
+        'panel_third_level_font_color' => '#4b5563',
+        'panel_third_level_font_size' => '14px',
+        'panel_third_level_padding' => '5px 0',
+        'flyout_width' => '200px',
+        'flyout_background_from' => '#ffffff',
+        'flyout_background_to' => '#ffffff',
+        'flyout_border_color' => '#e5e7eb',
+        'flyout_border_radius' => '4px',
+        'flyout_padding' => '16px',
+        'responsive_breakpoint' => '768px',
+        'responsive_text' => 'Меню',
+        'mobile_columns' => 1,
+        'mobile_background_from' => '#ffffff',
+        'mobile_background_to' => '#ffffff',
+        'mobile_menu_item_height' => '40px',
+        'mobile_menu_padding' => '20px',
+        'shadow' => 'on',
+        'shadow_horizontal' => '0px',
+        'shadow_vertical' => '4px',
+        'shadow_blur' => '12px',
+        'shadow_spread' => '0px',
+        'shadow_color' => 'rgba(0, 0, 0, 0.1)',
+        'transitions' => 'on'
+    ];
+    return $themes;
+}
+add_filter('megamenu_themes', 'element_kran_megamenu_override_default_theme');
+
+// Регистрируем области для виджетов мега-меню
+function element_kran_mega_menu_widgets() {
+    register_sidebar([
+        'name' => 'Мега-меню - Запчасти',
+        'id' => 'mega-menu-parts',
+        'description' => 'Виджеты для разде��а запчастей в мега-меню',
+        'before_widget' => '<div class="mega-menu-widget">',
+        'after_widget' => '</div>',
+        'before_title' => '<h4 class="text-lg font-bold mb-4">',
+        'after_title' => '</h4>'
+    ]);
+
+    register_sidebar([
+        'name' => 'Мега-меню - Производители',
+        'id' => 'mega-menu-manufacturers',
+        'description' => 'Виджеты для раздела производителей в мега-меню',
+        'before_widget' => '<div class="mega-menu-widget">',
+        'after_widget' => '</div>',
+        'before_title' => '<h4 class="text-lg font-bold mb-4">',
+        'after_title' => '</h4>'
+    ]);
+}
+add_action('widgets_init', 'element_kran_mega_menu_widgets');
+
+function element_kran_scripts() {
+    // ... другие скрипты ...
+    
+    wp_enqueue_script(
+        'element-kran-mega-menu',
+        get_template_directory_uri() . '/assets/js/mega-menu.js',
+        array(),
+        '1.0',
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'element_kran_scripts');
+
+function add_quick_order_scripts() {
+    wp_enqueue_script('quick-order', get_template_directory_uri() . '/js/quick-order.js', array('jquery'), '1.0', true);
+    wp_localize_script('quick-order', 'quickOrderAjax', array(
+        'url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('quick-order-nonce')
+    ));
+}
+add_action('wp_enqueue_scripts', 'add_quick_order_scripts');
+
+function handle_quick_order() {
+    check_ajax_referer('quick-order-nonce', 'nonce');
+    
+    $name = sanitize_text_field($_POST['name']);
+    $phone = sanitize_text_field($_POST['phone']);
+    $email = sanitize_email($_POST['email']);
+    $company = sanitize_text_field($_POST['company']);
+    $crane_manufacturer = sanitize_text_field($_POST['crane_manufacturer']);
+    $crane_model = sanitize_text_field($_POST['crane_model']);
+    $message = sanitize_textarea_field($_POST['message']);
+    
+    // Формируем сообщение
+    $to = get_option('admin_email');
+    $subject = 'Новый быстрый заказ - ' . get_bloginfo('name');
+    $body = "Получен новый быстрый заказ:\n\n";
+    $body .= "Имя: $name\n";
+    $body .= "Телефон: $phone\n";
+    if ($email) $body .= "Email: $email\n";
+    if ($company) $body .= "Организация: $company\n";
+    $body .= "Производитель крана: $crane_manufacturer\n";
+    $body .= "Модель крана: $crane_model\n";
+    if ($message) $body .= "Описание необходимых запчастей:\n$message\n";
+    
+    $headers = array('Content-Type: text/plain; charset=UTF-8');
+    
+    $sent = wp_mail($to, $subject, $body, $headers);
+    
+    if ($sent) {
+        wp_send_json_success('Ваш заказ успешно отправлен');
+    } else {
+        wp_send_json_error('Произошла ошибка при отправке ��аказа');
+    }
+}
+add_action('wp_ajax_quick_order', 'handle_quick_order');
+add_action('wp_ajax_nopriv_quick_order', 'handle_quick_order');

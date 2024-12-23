@@ -8,3 +8,33 @@ License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: crane-parts
 */
+
+#quick-order-form input,
+#quick-order-form textarea {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  outline: none;
+}
+
+#quick-order-form button {
+  width: 100%;
+  padding: 10px;
+  background: #f97316;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#quick-order-form button:hover {
+  background: #ea580c;
+}
+
+#quick-order-form input:focus,
+#quick-order-form textarea:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+}

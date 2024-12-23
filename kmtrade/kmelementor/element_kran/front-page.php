@@ -277,7 +277,7 @@ $contact_defaults = [
                 'color' => 'blue'
             ),
             'Троса' => array(
-                'description' => 'Тросы, канаты и комплектующие высокой прочности',
+                'description' => 'Тросы, канаты и комплектующи�� высокой прочности',
                 'icon' => 'M13 10V3L4 14h7v7l9-11h-7z',
                 'image' => 'ropes.jpg',
                 'color' => 'green'
@@ -589,7 +589,7 @@ $contact_defaults = [
                         <svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
-                        Га��антия производителя
+                        Гарантия производителя
                     </li>
                 </ul>
             </div>
@@ -696,7 +696,7 @@ $contact_defaults = [
                         Регулярное обслуживание и своевременная замена запчастей позволяют значительно увеличить срок эксплуатации башенного крана...
                     </p>
                     <a href="#" class="inline-flex items-center text-orange-600 font-medium group-hover:text-orange-700">
-                        Читать д��лее
+                        Читать далее
                         <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" 
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -786,7 +786,7 @@ $contact_defaults = [
                 Поддержка
             </div>
             <h2 class="text-3xl font-bold text-zinc-900 mb-4">Часто задаваемые вопросы</h2>
-            <p class="text-zinc-600">Ответы на самые популярне вопросы наших клиентов</p>
+            <p class="text-zinc-600">Ответы на самые популярные вопросы наших клиентов</p>
         </div>
 
         <div class="space-y-4">
@@ -890,6 +890,63 @@ $contact_defaults = [
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ секция -->
+<section class="bg-gray-50 py-16">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                <?php echo get_theme_mod('faq_title', 'Часто задаваемые вопросы'); ?>
+            </h2>
+            <p class="text-xl text-gray-600">
+                <?php echo get_theme_mod('faq_subtitle', 'Ответы на популярные вопросы о запчастях для башенных кранов'); ?>
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <?php for ($i = 1; $i <= 6; $i++) : 
+                $question = get_theme_mod('faq_question_' . $i);
+                $answer = get_theme_mod('faq_answer_' . $i);
+                if ($question && $answer) :
+            ?>
+                <div class="bg-white rounded-lg shadow-sm faq-item" x-data="{ open: false }">
+                    <button 
+                        class="flex justify-between items-center w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors"
+                        @click="open = !open"
+                        :aria-expanded="open">
+                        <span class="text-lg font-medium text-gray-900 pr-8"><?php echo esc_html($question); ?></span>
+                        <svg 
+                            class="w-5 h-5 text-gray-500 transform transition-transform duration-200 flex-shrink-0"
+                            :class="{ 'rotate-180': open }"
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div 
+                        class="px-6 pb-4 border-t border-gray-100"
+                        x-show="open"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 transform -translate-y-2"
+                        x-transition:enter-end="opacity-100 transform translate-y-0"
+                        x-transition:leave="transition ease-in duration-200"
+                        x-transition:leave-start="opacity-100 transform translate-y-0"
+                        x-transition:leave-end="opacity-0 transform -translate-y-2"
+                        x-cloak
+                        style="display: none;">
+                        <div class="prose prose-orange max-w-none text-gray-600 pt-4">
+                            <?php echo wp_kses_post($answer); ?>
+                        </div>
+                    </div>
+                </div>
+            <?php 
+                endif;
+            endfor; 
+            ?>
         </div>
     </div>
 </section>
