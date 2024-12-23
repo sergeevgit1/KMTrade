@@ -1,4 +1,9 @@
 <?php
+ob_start();
+if (!session_id()) {
+    session_start();
+}
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -297,6 +302,224 @@ function crane_parts_customize_register($wp_customize) {
             )
         ));
     }
+
+    // Секция настроек главной страницы
+    $wp_customize->add_section('homepage_settings', array(
+        'title' => 'Настройки главной страницы',
+        'priority' => 30,
+    ));
+
+    // Hero Section
+    $wp_customize->add_setting('hero_title', array(
+        'default' => 'Запчасти для башенных кранов всех видов и моделей',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+    
+    $wp_customize->add_control('hero_title', array(
+        'label' => 'Заголовок Hero-секции',
+        'section' => 'homepage_settings',
+        'type' => 'text'
+    ));
+
+    $wp_customize->add_setting('hero_subtitle', array(
+        'default' => 'Подберём и доставим нужную деталь — быстро, надёжно, выгодно',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+    
+    $wp_customize->add_control('hero_subtitle', array(
+        'label' => 'Подзаголовок Hero-секции',
+        'section' => 'homepage_settings',
+        'type' => 'textarea'
+    ));
+
+    $wp_customize->add_setting('hero_background', array(
+        'default' => '',
+        'sanitize_callback' => 'absint'
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'hero_background', array(
+        'label' => 'Фоновое изображение Hero-секции',
+        'section' => 'homepage_settings',
+        'mime_type' => 'image',
+    )));
+
+    $wp_customize->add_setting('hero_crane_image', array(
+        'default' => '',
+        'sanitize_callback' => 'absint'
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'hero_crane_image', array(
+        'label' => 'Изображение крана',
+        'section' => 'homepage_settings',
+        'mime_type' => 'image',
+    )));
+
+    // Преимущества в Hero-секции
+    for ($i = 1; $i <= 3; $i++) {
+        $wp_customize->add_setting("hero_advantage_{$i}_title", array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        
+        $wp_customize->add_control("hero_advantage_{$i}_title", array(
+            'label' => "Преимущество {$i} - Заголовок",
+            'section' => 'homepage_settings',
+            'type' => 'text'
+        ));
+
+        $wp_customize->add_setting("hero_advantage_{$i}_text", array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        
+        $wp_customize->add_control("hero_advantage_{$i}_text", array(
+            'label' => "Преимущество {$i} - Текст",
+            'section' => 'homepage_settings',
+            'type' => 'textarea'
+        ));
+    }
+
+    // О компании
+    $wp_customize->add_setting('about_title', array(
+        'default' => 'О компании',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+    
+    $wp_customize->add_control('about_title', array(
+        'label' => 'Заголовок секции "О компании"',
+        'section' => 'homepage_settings',
+        'type' => 'text'
+    ));
+
+    $wp_customize->add_setting('about_text', array(
+        'default' => '',
+        'sanitize_callback' => 'wp_kses_post'
+    ));
+    
+    $wp_customize->add_control('about_text', array(
+        'label' => 'Текст секции "О компании"',
+        'section' => 'homepage_settings',
+        'type' => 'textarea'
+    ));
+
+    // Как н��йти запчасть
+    $wp_customize->add_setting('how_to_find_title', array(
+        'default' => 'Как найти нужную запчасть?',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+    
+    $wp_customize->add_control('how_to_find_title', array(
+        'label' => 'Заголовок секции "Как найти запчасть"',
+        'section' => 'homepage_settings',
+        'type' => 'text'
+    ));
+
+    $wp_customize->add_setting('how_to_find_text', array(
+        'default' => '',
+        'sanitize_callback' => 'wp_kses_post'
+    ));
+    
+    $wp_customize->add_control('how_to_find_text', array(
+        'label' => 'Описание процесса поиска',
+        'section' => 'homepage_settings',
+        'type' => 'textarea'
+    ));
+
+    // Как оформить заказ
+    for ($i = 1; $i <= 4; $i++) {
+        $wp_customize->add_setting("order_step_{$i}_title", array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        
+        $wp_customize->add_control("order_step_{$i}_title", array(
+            'label' => "Шаг {$i} - Заголовок",
+            'section' => 'homepage_settings',
+            'type' => 'text'
+        ));
+
+        $wp_customize->add_setting("order_step_{$i}_text", array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        
+        $wp_customize->add_control("order_step_{$i}_text", array(
+            'label' => "Шаг {$i} - Описание",
+            'section' => 'homepage_settings',
+            'type' => 'textarea'
+        ));
+    }
+
+    // FAQ
+    for ($i = 1; $i <= 5; $i++) {
+        $wp_customize->add_setting("faq_{$i}_question", array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        
+        $wp_customize->add_control("faq_{$i}_question", array(
+            'label' => "Вопрос {$i}",
+            'section' => 'homepage_settings',
+            'type' => 'text'
+        ));
+
+        $wp_customize->add_setting("faq_{$i}_answer", array(
+            'default' => '',
+            'sanitize_callback' => 'wp_kses_post'
+        ));
+        
+        $wp_customize->add_control("faq_{$i}_answer", array(
+            'label' => "Ответ {$i}",
+            'section' => 'homepage_settings',
+            'type' => 'textarea'
+        ));
+    }
+
+    // Контактная форма
+    $wp_customize->add_setting('contact_form_title', array(
+        'default' => 'Остались вопросы?',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+    
+    $wp_customize->add_control('contact_form_title', array(
+        'label' => 'Заголовок формы обратной связи',
+        'section' => 'homepage_settings',
+        'type' => 'text'
+    ));
+
+    // Контактные данные
+    $wp_customize->add_setting('contact_phone', array(
+        'default' => '',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+    
+    $wp_customize->add_control('contact_phone', array(
+        'label' => 'Телефон',
+        'section' => 'homepage_settings',
+        'type' => 'text'
+    ));
+
+    $wp_customize->add_setting('contact_email', array(
+        'default' => '',
+        'sanitize_callback' => 'sanitize_email'
+    ));
+    
+    $wp_customize->add_control('contact_email', array(
+        'label' => 'Email',
+        'section' => 'homepage_settings',
+        'type' => 'email'
+    ));
+
+    $wp_customize->add_setting('contact_address', array(
+        'default' => '',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+    
+    $wp_customize->add_control('contact_address', array(
+        'label' => 'Адрес',
+        'section' => 'homepage_settings',
+        'type' => 'text'
+    ));
 }
 add_action('customize_register', 'crane_parts_customize_register');
 
@@ -502,7 +725,7 @@ function crane_parts_catalog_settings($wp_customize) {
         ));
 
         $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'catalog_featured_categories', array(
-            'label' => 'Выберите категории дл отбжения',
+            'label' => 'Выберите категории дл отбжен��я',
             'section' => 'catalog_settings',
             'type' => 'select',
             'multiple' => true,
@@ -611,7 +834,7 @@ function crane_parts_404_page() {
             </form>
         </div>
 
-        <!-- Список послднх 404 ош��бок -->
+        <!-- Список послднх 404 ошибок -->
         <div class="card">
             <h2>Последние 404 ошибки</h2>
             <table class="wp-list-table widefat fixed striped">
@@ -639,7 +862,7 @@ function crane_parts_404_page() {
     <?php
 }
 
-// Функция для получения SVG иконок для 404 страницы
+// Функция дл получения SVG иконок для 404 страницы
 function crane_parts_get_404_icon($icon) {
     $icons = array(
         'home' => '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>',
@@ -684,7 +907,7 @@ function crane_parts_megamenu_settings($wp_customize) {
         )));
     }
 
-    // Категории по ��оделям кранов
+    // Категории по моделям кранов
     $wp_customize->add_setting('megamenu_crane_categories', array(
         'default' => array(),
         'sanitize_callback' => 'crane_parts_sanitize_array'
@@ -942,7 +1165,7 @@ add_action('init', 'register_theme_menus');
 // Кастомный walker для основного меню
 class Primary_Menu_Walker extends Walker_Nav_Menu {
     function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0) {
-        // Проверяем, является ли пункт меню каталогом или моим заказом
+        // Проверяем, является ли ��ункт меню каталогом или моим заказом
         $title_lower = mb_strtolower(trim($item->title));
         if ($title_lower === 'каталог') {
             // Пропускаем, так как каталог отображается отдельно слева
@@ -1057,13 +1280,18 @@ add_action('pre_get_posts', 'element_kran_apply_saved_filters');
 
 // Перенаправление с product-category на страницу каталога с фильтрами
 function redirect_product_category_to_catalog() {
+    // Проверяем, активирован ли WooCommerce
+    if (!function_exists('is_product_category')) {
+        return;
+    }
+
     // Проверяем, является ли текущий запрос страницей категории товара
     if (is_product_category()) {
         // Получаем текущую категорию
         $category = get_queried_object();
         
-        // Формируем URL для сраницы parts с ��ильтром
-        $catalog_url = home_url('/wp/parts/');
+        // Формируем URL для страницы parts с фильтром
+        $catalog_url = home_url('/new/parts/');
         $redirect_url = add_query_arg(array(
             'product_cat' => $category->slug,
             'filter' => 'category'
@@ -1074,12 +1302,21 @@ function redirect_product_category_to_catalog() {
         exit;
     }
 }
-add_action('template_redirect', 'redirect_product_category_to_catalog', 5);
 
-// Модифицируем все ссылки категорий, чтобы они вели на страницу каталога
+// Проверяем наличие WooCommerce перед добавлением хука
+if (function_exists('is_product_category')) {
+    add_action('template_redirect', 'redirect_product_category_to_catalog', 5);
+}
+
+// Модифицируем все ссылки категорий
 function modify_product_category_links($url, $term, $taxonomy) {
+    // Проверяем, активирован ли WooCommerce
+    if (!function_exists('is_product_category')) {
+        return $url;
+    }
+
     if ($taxonomy === 'product_cat') {
-        $catalog_url = home_url('/wp/parts/');
+        $catalog_url = home_url('/new/parts/');
         return add_query_arg(array(
             'product_cat' => $term->slug,
             'filter' => 'category'
@@ -1087,64 +1324,29 @@ function modify_product_category_links($url, $term, $taxonomy) {
     }
     return $url;
 }
-add_filter('term_link', 'modify_product_category_links', 10, 3);
 
-function custom_select_styles() {
-    $custom_css = "
-        select option {
-            padding: 12px 16px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        select option:hover,
-        select option:focus {
-            background-color: rgba(234, 88, 12, 0.1) !important;
-            color: #ea580c !important;
-        }
-
-        select option:checked {
-            background-color: rgba(234, 88, 12, 0.1) !important;
-            color: #ea580c !important;
-            font-weight: 600;
-        }
-
-        /* Стилизация для Firefox */
-        @-moz-document url-prefix() {
-            select option:hover,
-            select option:focus {
-                background-color: rgba(234, 88, 12, 0.1) !important;
-                color: #ea580c !important;
-            }
-            
-            select option:checked {
-                box-shadow: 0 0 0 100px rgba(234, 88, 12, 0.1) inset !important;
-                color: #ea580c !important;
-            }
-        }
-
-        /* Стилизация для Chrome/Safari */
-        @media screen and (-webkit-min-device-pixel-ratio:0) {
-            select option:hover,
-            select option:focus {
-                background-color: rgba(234, 88, 12, 0.1) !important;
-                color: #ea580c !important;
-            }
-        }
-    ";
-    
-    wp_add_inline_style('your-theme-style', $custom_css);
+// Проверяем наличие WooCommerce перед добавлением фильтра
+if (function_exists('is_product_category')) {
+    add_filter('term_link', 'modify_product_category_links', 10, 3);
 }
-add_action('wp_enqueue_scripts', 'custom_select_styles');
 
 // Отключаем отдельные страницы товаров
 function disable_single_product_pages() {
+    // Проверяем, активирован ли WooCommerce
+    if (!function_exists('is_singular')) {
+        return;
+    }
+
     if (is_singular('product')) {
-        wp_redirect(home_url('/catalog/parts/'));
+        wp_redirect(home_url('/new/catalog/parts/'));
         exit();
     }
 }
-add_action('template_redirect', 'disable_single_product_pages');
+
+// Проверяем наличие WooCommerce перед добавлением хука
+if (function_exists('is_singular')) {
+    add_action('template_redirect', 'disable_single_product_pages');
+}
 
 // Обработка отправки заказа
 function handle_parts_order() {
@@ -1190,3 +1392,13 @@ function handle_parts_order() {
 }
 add_action('wp_ajax_submit_parts_order', 'handle_parts_order');
 add_action('wp_ajax_nopriv_submit_parts_order', 'handle_parts_order');
+
+// Функция для склонения слов
+function plural_form($n, $form1, $form2, $form5) {
+    $n = abs($n) % 100;
+    $n1 = $n % 10;
+    if ($n > 10 && $n < 20) return $form5;
+    if ($n1 > 1 && $n1 < 5) return $form2;
+    if ($n1 == 1) return $form1;
+    return $form5;
+}
