@@ -7,6 +7,26 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
+        /* Определение кастомных цветов */
+        .bg-custom-primary {
+            background-color: #f38e19;
+        }
+        .bg-custom-primary:hover {
+            background-color: #d97d16;
+        }
+        .text-custom-primary {
+            color: #f38e19;
+        }
+        .text-custom-primary:hover {
+            color: #d97d16;
+        }
+        .from-custom-50 {
+            --tw-gradient-from: #fef4e6;
+        }
+        .to-custom-100 {
+            --tw-gradient-to: #fde9cc;
+        }
+
         [x-cloak] { display: none !important; }
         
         .faq-item button:focus {
@@ -33,6 +53,436 @@
         
         .faq-item button[aria-expanded="true"] svg {
             transform: rotate(180deg);
+        }
+
+        /* Стили для мобильных устройств */
+        @media (max-width: 768px) {
+            /* Верхняя часть шапки */
+            .container .flex {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                padding: 0.5rem;
+            }
+
+            /* Логотип */
+            .custom-logo {
+                max-height: 40px;
+                width: auto;
+            }
+
+            /* Поиск */
+            .flex-1.max-w-3xl {
+                order: 3;
+                width: 100%;
+                padding: 0;
+                margin: 0.5rem 0;
+            }
+
+            .search-input {
+                height: 40px;
+                font-size: 14px;
+            }
+
+            /* Контакты и кнопка быстрого заказа */
+            .flex.items-center.space-x-8 {
+                gap: 0.5rem;
+            }
+
+            /* Телефон и время работы */
+            .text-right {
+                text-align: right;
+                font-size: 0.875rem;
+            }
+
+            .text-lg.font-bold {
+                font-size: 1rem;
+            }
+
+            .text-sm {
+                font-size: 0.75rem;
+            }
+
+            /* Кнопка быстрого заказа */
+            .bg-primary {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+                border-width: 1px !important;
+            }
+
+            /* Нижняя часть шапки */
+            .bg-white.border-b .container {
+                padding: 0.5rem;
+            }
+
+            nav.flex-1.flex.items-center.justify-between {
+                gap: 0.5rem;
+            }
+
+            /* Кнопка каталога */
+            #catalog-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            #catalog-button svg {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+
+            /* Мобильное меню */
+            #mobile-menu > div {
+                max-width: 100%;
+                width: 300px;
+            }
+
+            #mobile-menu-content {
+                padding: 0.5rem;
+            }
+
+            #mobile-menu-content a {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            /* Мега-меню на мобильных */
+            #mega-menu {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                overflow-y: auto;
+                background: white;
+                z-index: 50;
+            }
+
+            #mega-menu .container {
+                padding: 1rem;
+            }
+
+            #mega-menu .grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            /* Компактное отображение категорий */
+            .mega-menu-category {
+                padding: 0.5rem;
+                font-size: 0.875rem;
+            }
+
+            /* Компактное отображение производителей */
+            .mega-menu-manufacturer {
+                padding: 0.5rem;
+                font-size: 0.875rem;
+            }
+
+            .manufacturer-country {
+                font-size: 0.75rem;
+                padding: 0.125rem 0.5rem;
+            }
+
+            /* Кнопка заказа на мобильных */
+            .order-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .order-button svg {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+
+            /* Мобильная кнопка меню */
+            #mobile-menu-button {
+                padding: 0.5rem;
+                margin-left: 0.5rem;
+            }
+
+            #mobile-menu-button svg {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+
+        /* Стили для очень маленьких экранов */
+        @media (max-width: 360px) {
+            /* Скрываем время работы на самых маленьких экранах */
+            .text-sm.text-gray-600 {
+                display: none;
+            }
+
+            /* Уменьшаем размер телефона */
+            .text-lg.font-bold {
+                font-size: 0.875rem;
+            }
+
+            /* Минимизируем отступы */
+            .container {
+                padding: 0.25rem;
+            }
+        }
+
+        /* Стили для планшетов */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            /* Контейнер */
+            .container {
+                padding: 0 1rem;
+            }
+
+            /* Поиск */
+            .flex-1.max-w-3xl {
+                padding: 0 1rem;
+            }
+
+            /* Мега-меню */
+            #mega-menu .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Стили для ноутбуков */
+        @media (min-width: 1025px) and (max-width: 1366px) {
+            /* Контейнер */
+            .container {
+                max-width: 1200px;
+                padding: 0 2rem;
+            }
+
+            /* Логотип */
+            .custom-logo {
+                max-height: 50px;
+            }
+
+            /* Поиск */
+            .flex-1.max-w-3xl {
+                max-width: 500px;
+                margin: 0 2rem;
+            }
+
+            /* Контакты */
+            .text-lg.font-bold {
+                font-size: 1.125rem;
+            }
+
+            /* Кнопки */
+            .bg-primary,
+            #catalog-button,
+            .order-button {
+                padding: 0.75rem 1.5rem;
+            }
+
+            /* Мега-меню */
+            #mega-menu .container {
+                padding: 2rem;
+            }
+
+            #mega-menu .grid {
+                gap: 2rem;
+            }
+        }
+
+        /* Общие стили для всех устройств больше мобильных */
+        @media (min-width: 769px) {
+            /* Верхняя часть шапки */
+            .bg-white.border-b {
+                padding: 1rem 0;
+            }
+
+            /* Навигация */
+            nav.flex-1.flex.items-center.justify-between {
+                position: relative;
+            }
+
+            /* Центральное меню */
+            .flex-1.flex.items-center.justify-center.px-8 {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                width: auto;
+            }
+
+            /* Контейнер меню */
+            .mega-menu-container {
+                display: flex;
+                justify-content: center;
+                width: fit-content;
+            }
+
+            /* Обновляем HTML структуру меню */
+            #mega-menu-wrap-primary #mega-menu-primary {
+                display: inline-flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 1rem !important;
+                background-color: #f38e19!important;
+                padding: 0.75rem 1.5rem !important;
+                border-radius: 0.5rem !important;
+                width: fit-content !important;
+            }
+
+            /* Обновляем стили для кнопки заказа */
+            .order-button {
+                display: flex !important;
+                align-items: center !important;
+                gap: 0.5rem !important;
+                padding: 0.75rem 1.5rem !important;
+                color: #374151 !important;
+                border: 1px solid #e5e7eb !important;
+                border-radius: 0.5rem !important;
+                background-color: transparent !important;
+            }
+
+            .order-button:hover {
+                background-color: #f3f4f6 !important;
+                color: #f38e19 !important;
+            }
+
+            /* Обновляем стили для иконок в кнопках */
+            #catalog-button svg,
+            .order-button svg {
+                stroke: currentColor;
+            }
+        }
+
+        /* Стили для мобильного меню */
+        .mobile-menu-active {
+            overflow: hidden;
+        }
+
+        .mobile-menu-active #mobile-menu {
+            display: block;
+        }
+
+        .mobile-menu-active #mobile-menu > div {
+            transform: translateX(0);
+        }
+
+        #mobile-menu-content {
+            padding: 1rem;
+        }
+
+        #mobile-menu-content a {
+            display: block;
+            padding: 0.75rem;
+            color: #374151;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        #mobile-menu-content a:hover {
+            background-color: #f3f4f6;
+            color: #f38e19;
+        }
+
+        /* Верхняя часть шапки */
+        .bg-white.border-b {
+            background-color: #f38e19 !important;
+            border-bottom: none;
+        }
+
+        /* Обновляем цвета текста для лучшей читаемости на оранжевом фоне */
+        .text-gray-800 {
+            color: white !important;
+        }
+
+        .text-gray-600 {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        /* Стили для поиска на оранжевом фоне */
+        .search-input {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-color: transparent !important;
+        }
+
+        .search-input:focus {
+            background-color: white;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Кнопка быстрого заказа на оранжевом фоне */
+        .bg-primary {
+            background-color: #374151 !important;
+            color: white !important;
+            border: 2px solid white !important;
+        }
+
+        .bg-primary:hover {
+            background-color: #1f2937 !important;
+            border-color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        /* Нижняя часть шапки */
+        .bg-white.border-b.border-gray-200 {
+            background-color: white !important;
+            border-bottom: 1px solid rgba(243, 142, 25, 0.1);
+        }
+
+        /* Обновляем стили для мобильных устройств */
+        @media (max-width: 768px) {
+            .bg-white.border-b {
+                padding: 0.5rem 0;
+            }
+            
+            .search-input {
+                background-color: rgba(255, 255, 255, 0.95);
+            }
+        }
+
+        /* Стили для подвала */
+        footer {
+            background-color: #f38e19 !important;
+            color: white;
+        }
+
+        footer .text-gray-600,
+        footer .text-gray-500 {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        footer .text-gray-900,
+        footer .text-gray-800 {
+            color: white !important;
+        }
+
+        footer a:not(.bg-primary) {
+            color: white !important;
+        }
+
+        footer a:hover:not(.bg-primary) {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        /* Стили для разделителей в подвале */
+        footer .border-t,
+        footer .border-b {
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* Стили для иконок в подвале */
+        footer svg {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        /* Стили для кнопок в подвале */
+        footer .bg-gray-100 {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        footer .bg-gray-100:hover {
+            background-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        /* Адаптивные стили для подвала */
+        @media (max-width: 768px) {
+            footer {
+                padding: 2rem 1rem;
+            }
+            
+            footer .container {
+                padding: 0;
+            }
         }
     </style>
     <script>console.warn = () => {};</script>
@@ -319,7 +769,7 @@
 
     /* Обновим стил для кнопки быстрого заказа */
     .bg-primary {
-        background-color: #ea580c !important;
+        background-color: #f38e19!important;
     }
 
     .hover\:bg-primary-hover:hover {
@@ -369,7 +819,7 @@
         justify-content: center !important;
         align-items: center !important;
         gap: 1rem !important;
-        background-color: #ea580c !important;
+        background-color: #f38e19!important;
         padding: 0.75rem 1.5rem !important;
         border-radius: 0.5rem !important;
         width: fit-content !important;
@@ -396,6 +846,94 @@
     #catalog-button svg,
     .order-button svg {
         stroke: currentColor;
+    }
+
+    /* Общие стили для планшетов и ноутбуков */
+    @media (min-width: 769px) {
+        /* Контейнер центрального меню */
+        .mega-menu-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Основное меню */
+        #mega-menu-wrap-primary {
+            width: 100%;
+        }
+
+        #mega-menu-wrap-primary #mega-menu-primary {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 1rem !important;
+            background-color: #f38e19!important;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 0.5rem !important;
+            width: fit-content !important;
+            flex-wrap: nowrap !important;
+            white-space: nowrap !important;
+        }
+
+        #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-item > a.mega-menu-link {
+            color: white !important;
+            font-weight: 500 !important;
+            font-size: 1.125rem !important;
+            background: transparent !important;
+            transition: opacity 0.2s ease-in-out !important;
+            position: relative !important;
+            padding: 0 0.5rem !important;
+            line-height: normal !important;
+            height: auto !important;
+            white-space: nowrap !important;
+        }
+
+        #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-item > a.mega-menu-link:hover,
+        #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-item.mega-current-menu-item > a.mega-menu-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            background: transparent !important;
+        }
+
+        /* Выравнивание меню по центру */
+        #mega-menu-wrap-primary {
+            width: 100%;
+        }
+
+        #mega-menu-wrap-primary #mega-menu-primary {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 1rem !important;
+        }
+    }
+
+    /* Специфичные стили для планшетов */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        #mega-menu-wrap-primary #mega-menu-primary {
+            padding: 0.5rem 1rem !important;
+        }
+
+        #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-item > a.mega-menu-link {
+            font-size: 1rem !important;
+            padding: 0 0.25rem !important;
+        }
+    }
+
+    /* Специфичные стили для ноутбуков */
+    @media (min-width: 1025px) and (max-width: 1366px) {
+        #mega-menu-wrap-primary #mega-menu-primary {
+            padding: 0.75rem 2rem !important;
+        }
+
+        #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-item > a.mega-menu-link {
+            font-size: 1.125rem !important;
+            padding: 0 0.75rem !important;
+        }
+    }
+
+    /* Сброс стилей для мобильного меню */
+    .mega-menu-toggle {
+        display: none !important;
     }
     </style>
 </head>
@@ -468,7 +1006,7 @@
                     <div class="catalog-trigger">
                         <a href="<?php echo esc_url(home_url('/catalog/')); ?>"
                                 id="catalog-button" 
-                                class="flex items-center space-x-2 bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition-colors">
+                                class="flex items-center space-x-2 bg-custom-primary text-white px-6 py-3 rounded-lg hover:bg-custom-primary transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                             </svg>
@@ -502,7 +1040,7 @@
                                         <?php endforeach; ?>
                                         
                                         <a href="<?php echo esc_url(home_url('/catalog/')); ?>" 
-                                           class="inline-flex items-center text-orange-500 hover:text-orange-600">
+                                           class="inline-flex items-center text-custom-primary hover:text-custom-primary">
                                             <span>Все категории</span>
                                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -536,17 +1074,17 @@
                                 </div>
 
                                 <!-- Колонка 3: Помощь -->
-                                <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-6 space-y-4">
+                                <div class="bg-gradient-to-br from-custom-50 to-custom-100 rounded-lg p-6 space-y-4">
                                     <h3 class="text-lg font-bold text-gray-900">Не нашли нужную деталь?</h3>
                                     <p class="text-gray-600">Наш специалист поможет подобрать необходимые запчасти для вашей техники</p>
                                     <a href="<?php echo esc_url(home_url('/quick-order/')); ?>" 
-                                       class="w-full bg-orange-500 text-white py-2.5 px-4 rounded-lg hover:bg-orange-600 transition-colors inline-block text-center">
+                                       class="w-full bg-custom-primary text-white py-2.5 px-4 rounded-lg hover:bg-custom-primary transition-colors inline-block text-center">
                                         Быстрый заказ
                                     </a>
                                     <div class="text-sm text-gray-500">
                                         Или позвоните нам:
                                         <a href="tel:<?php echo get_theme_mod('phone_number'); ?>" 
-                                           class="block text-orange-500 font-medium hover:text-orange-600 mt-1">
+                                           class="block text-custom-primary font-medium hover:text-custom-primary mt-1">
                                             <?php echo get_theme_mod('phone_number', '+7 (XXX) XXX-XX-XX'); ?>
                                         </a>
                                     </div>
@@ -570,7 +1108,7 @@
 
                     <!-- Мой заказ (правый край) -->
                     <a href="<?php echo esc_url(home_url('/wp/my-order/')); ?>" 
-                       class="order-button hidden md:flex items-center space-x-2 bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition-colors">
+                       class="order-button hidden md:flex items-center space-x-2 bg-custom-primary text-white px-6 py-3 rounded-lg hover:bg-custom-primary transition-colors">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
@@ -652,6 +1190,40 @@ document.addEventListener('DOMContentLoaded', function() {
         isOverMenu = false;
         hideMenu();
     });
+
+    // Добавим функционал мобильного меню
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const closeMobileMenu = document.getElementById('close-mobile-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuContent = document.getElementById('mobile-menu-content');
+
+    // Клонируем основное меню для мобильной версии
+    const mainMenu = document.querySelector('.mega-menu-container');
+    if (mainMenu) {
+        const mobileMenuItems = mainMenu.cloneNode(true);
+        mobileMenuContent.appendChild(mobileMenuItems);
+    }
+
+    function toggleMobileMenu() {
+        document.body.classList.toggle('mobile-menu-active');
+    }
+
+    mobileMenuButton.addEventListener('click', toggleMobileMenu);
+    closeMobileMenu.addEventListener('click', toggleMobileMenu);
+
+    // Закрытие при клике вне меню
+    mobileMenu.addEventListener('click', (e) => {
+        if (e.target === mobileMenu) {
+            toggleMobileMenu();
+        }
+    });
+
+    // Обработка ресайза окна
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && document.body.classList.contains('mobile-menu-active')) {
+            document.body.classList.remove('mobile-menu-active');
+        }
+    });
 });
 </script> 
 
@@ -662,7 +1234,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <form id="quick-order-form">
             <input type="text" name="name" placeholder="Ваше имя" required>
             <input type="tel" name="phone" placeholder="Ваш телефон" required>
-            <input type="email" name="email" placeholder="Ваш email">
+            <input type="email" name="email" placeholder="Ва�� email">
             <textarea name="message" placeholder="Сообщение"></textarea>
             <button type="submit">Отправить заказ</button>
         </form>
