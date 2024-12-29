@@ -1,0 +1,35 @@
+/* Quotes */
+.wp-block-quote p,
+.wp-block-pullquote blockquote > .editor-rich-text p {
+	font-size: 20px;
+	font-style: normal;
+	line-height: 34px;
+}
+
+/* Links */
+.wp-block-latest-posts,
+ul.wp-block-archives,
+.wp-block-categories ul {
+	padding-left: 0;
+}
+
+.wp-block-latest-posts a,
+.wp-block-archives a,
+.wp-block-categories a {
+	text-decoration: none;
+	color: #000;
+}
+
+.wp-block-latest-posts li,
+.wp-block-archives li,
+.wp-block-categories li{
+	list-style-type: none;
+}
+
+.wp-block-archives .count {
+	margin-left: 3px;
+}
+
+.components-button {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}

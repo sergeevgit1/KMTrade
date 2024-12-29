@@ -1,0 +1,387 @@
+/*
+Theme Name: The Kran
+Theme URI: http://
+Author: Get Bowtied
+Author URI: https://
+Description: Available exclusively on the Kran.
+Version: 1.4.6
+Text Domain: the-hanger
+License:
+License URI:
+Tags:     #54595f
+*/
+
+@media screen and (min-width: 80em)
+{
+.site-header-style-1 .header-content {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+}
+
+.site-content-wrapper
+{
+ outline: 1px solid #fff;
+}
+
+.site-footer
+{
+ background-color: #f38e19 !important;
+ display: none;
+}
+
+.site-footer .footer-content
+{
+ padding-top: 10px;
+ padding-bottom: 14px;
+ background-color: #f38e19;
+}
+
+.site-prefooter
+{
+ background-color: #eeeeee;
+}
+
+.site-prefooter .prefooter-content
+{
+ padding:0;
+ margin: 0;
+}
+
+.site-prefooter .row
+{
+ max-width: unset !important;
+ margin: 0 !important;
+}
+
+.site-prefooter .column
+{
+ padding: 0 !important;
+}
+
+.site-prefooter .widget-area .column aside
+{
+ padding: 0 !important;
+}
+
+.term-impbashkran .jet-woo-product-thumbnail img,
+.term-kbbashkran .jet-woo-product-thumbnail img
+{
+ max-height: 300px;
+}
+
+.single-product .product .product_title
+{
+ margin-bottom: unset;
+}
+
+.elementor-price-list-title
+{
+/* color: #f38e19;*/
+ color: #000000;
+ font-weight: 400;
+}
+
+.site-wrapper .site-content-wrapper .site-content
+{
+ padding-bottom: 0 !important;
+}
+
+.sticky_header_placeholder.visible .header-navigation
+{
+ margin: 0 auto;
+}
+
+.header-secondary-navigation
+{
+/* display: none;*/
+/* margin: 0;
+ padding: 0;
+ margin-left: 0 !important;
+ margin-right: 100px;*/
+}
+
+#menu-item-67 > a > span,
+#menu-secondary-navigation-1 > li > a > span
+{
+ padding: 10px; 
+}
+#menu-item-67 > a
+{
+ font-size: 14px;
+}
+#menu-item-67,
+#menu-secondary-navigation-1 > li
+{
+ border: 2px solid #f38e19;
+ border-radius: 5px;
+}
+
+#menu-item-67:hover,
+#menu-secondary-navigation-1 > li:hover
+{
+ background-color: #f38e19;
+}
+
+#menu-item-67 > a > span,
+#menu-secondary-navigation-1 > li > a > span
+{
+ font-family: MyriadPro, Akrobat;
+ font-weight: 600;
+ color: #000;
+}
+
+#menu-item-67 > a > span:before,
+#menu-secondary-navigation-1 > li > a > span:before
+{
+ background: unset !important;
+}
+
+#menu-item-2620 > a > span
+{
+ padding: 10px; 
+}
+
+#menu-item-2620
+{
+ border: 2px solid #f38e19;
+ border-radius: 5px;
+ margin-right: 10px;
+}
+#menu-item-2620 a
+{
+	background-color: #f38e19;
+    font-size: 14px;
+}
+
+#menu-item-2620:hover
+{
+ background-color: #f38e19;
+}
+
+#menu-item-2620 > a > span
+{
+ font-family: MyriadPro, Akrobat;
+ font-weight: 600;
+ color: #000;
+}
+
+#menu-item-2620 > a > span:before
+{
+ background: unset !important; 
+}
+.sticky_header_placeholder.visible .menu-item-2620{
+	display: none;
+}
+body > div.site-wrapper > footer > div > div > div > div > aside > div > div
+{
+ max-width: 100% !important;
+ flex: 0 0 100% !important;
+ -ms-flex: 0 0 100% !important;
+ flex: 0 0 100% !important;
+}
+
+/*
+.child-sidebar-menu
+{
+ border: 1px solid #ebeef1;
+ overflow: hidden;
+ border-radius: 2px;
+}
+
+
+.child-sidebar-menu > li
+{
+ line-height: 16px;
+ position: relative;
+ display: block;
+}
+
+.child-sidebar-menu > li > a
+{
+ color: #2f383d;
+ border-top: 1px solid #ebeef1;
+ font-size: 14px;
+ position: relative;
+ text-decoration: none;
+ padding: 13px 32px 14px 20px;
+}
+
+.grandchild-sidebar-menu > li
+{
+ margin-bottom: 0;
+}
+*/
+.advanced-sidebar-menu ul li a 
+{
+ list-style: none;
+}
+
+.advanced-sidebar-menu ul li a {
+ margin: 0;
+/*    margin-bottom: 2px;*/
+ padding: 12px;
+ width: 100%;
+ color: #231f20;
+ text-align: center;
+ display: block;
+ font-size: 14px;
+ font-weight: unset;
+}
+
+/*.page_item:after {
+ content: "";
+ background: #ffffff url("images/separator.jpg");
+ height: 2px;
+ position: absolute;
+ width: 84%;
+ left: 8%;
+ margin-top: 31px;
+}
+*/
+
+/*.advanced-sidebar-menu ul li:nth-child(1) 
+{
+ border-radius: 5px 5px 0 0;
+}
+
+.advanced-sidebar-menu ul li:last-child
+{
+ border-radius: 0 0 5px 5px;
+}
+*/
+
+.advanced-sidebar-menu .page_item
+{
+ background-color: #eeeeee; 
+ margin-bottom: 2px;
+}
+
+.advanced-sidebar-menu .page_item:hover
+{
+ background-color: #ffc20e;
+}
+
+.advanced-sidebar-menu .current_page_item,
+.advanced-sidebar-menu .current_page_parent,
+.advanced-sidebar-menu .page_item .current_page_parent
+{
+ background-color: #f6a31a !important;
+}
+
+.advanced-sidebar-menu .current_page_item a 
+{
+/* font-weight: bold !important;*/
+}
+
+.advanced-sidebar-menu ul li .children {
+ margin: 0;
+ display: none;
+}
+
+
+.advanced-sidebar-menu ul li .children li a {
+ background-color: #ffffff;
+ text-align: left;
+}
+
+.advanced-sidebar-menu .current_page_item .children, 
+.advanced-sidebar-menu .current_page_ancestor .children 
+{
+ display: block;
+}
+
+.site-header-style-1 .header-content .header-line-1 .header-line-1-wrapper
+{ 
+ min-height: unset;
+}
+
+
+@media (max-width: 767px)
+{
+ .elementor-reverse-mobile>.elementor-container>.elementor-row>:first-child
+ {
+  order: 7;
+ }
+}
+
+
+.technical_data_module
+{
+    border-spacing: 0;
+    position: relative;
+    margin: 0;
+    width: 100%;
+    table-layout: fixed;
+    empty-cells: hide!important;
+    border-collapse: collapse;
+}
+
+.technical_data_module td, .technical_data_module th {
+    padding: 5px 10px 6px;
+    font-size: 14px;
+    line-height: 18px;
+    font-family: MyriadPro,Helvetica Neue,Helvetica,Arial,sans-serif;
+    empty-cells: hide!important;
+}
+
+.technical_data_module td {
+    font-weight: 400;
+}
+.technical_data_module th {
+    font-weight: 700;
+}
+
+#menu-item-354 > a
+{
+ padding-left:0;
+}
+
+.navigation-foundation>ul
+{
+ margin: 0;
+}
+
+.elementor-fit-aspect-ratio .elementor-carousel-image,
+.elementor-fit-aspect-ratio.elementor-carousel-image
+{
+ background-size: contain;
+}
+
+.dropdown.menu>li.opens-right>.is-dropdown-submenu {
+  min-width: 300px;
+}
+
+.header-mobiles-tools
+{
+ display: none !important;
+}
+
+.advanced-sidebar-menu .level-0 .page_item {
+    margin-bottom: 0px !important;
+    border-bottom: #eeeeee 1px solid; 
+}
+
+.advanced-sidebar-menu .level-0 .page_item > a {
+padding: 8px;
+}
+
+.gallery .gallery-icon img {
+    width: unset;
+    max-height: 140px;
+}
+
+.gallery-columns-3 .gallery-item {
+    width: unset !important;
+}
+.advanced-sidebar-menu .current_page_item>a{
+	font-weight:bold;
+}
+.gbt-primary-menu .current_page_item>a{
+color: #f38e19;
+}
+.gbt-primary-menu .current-menu-item>a{
+color: #f38e19;
+}
+.top-marg{margin-top:20px;}
+.kama_breadcrumbs a:hover{color:#f38e19;}
