@@ -12,8 +12,13 @@ if (!defined('ABSPATH')) {
 function crane_parts_setup() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
-    add_theme_support('custom-logo');
-    add_theme_support('elementor'); // Поддержка Elementor
+    add_theme_support('custom-logo', array(
+        'height'      => 40,
+        'width'       => 160,
+        'flex-height' => true,
+        'flex-width'  => true,
+        'header-text' => array('site-title', 'site-description'),
+    )); // Поддержка Elementor
 }
 add_action('after_setup_theme', 'crane_parts_setup');
 
