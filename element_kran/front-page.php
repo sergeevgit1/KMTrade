@@ -95,9 +95,6 @@ $contact_defaults = [
             <div class="relative z-10">
                 <!-- Основной контент -->
                 <div class="mb-12">
-                    <div class="inline-block bg-orange-600 text-white px-4 py-1 text-sm font-medium rounded mb-4">
-                        Поставка запчастей с 2010 года
-                    </div>
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-zinc-900 mb-6 leading-tight">
                         <?php echo esc_html(get_theme_mod('hero_title', $hero_defaults['title'])); ?>
                     </h1>
@@ -107,15 +104,15 @@ $contact_defaults = [
                     
                     <!-- Кнопки действий -->
                     <div class="flex flex-wrap gap-4">
-                        <a href="/new/parts/" 
-                           class="inline-flex items-center px-8 py-4 bg-orange-600 text-white rounded hover:bg-orange-700 transition-colors font-medium">
+                        <a href="/new/catalog/" 
+                           class="inline-flex items-center px-8 py-4 bg-brand-orange text-white rounded hover:bg-brand-orange-dark transition-colors font-medium">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
                             </svg>
                             Перейти в каталог
                         </a>
                         <a href="#contacts" 
-                           class="inline-flex items-center px-8 py-4 border border-zinc-200 text-zinc-800 rounded hover:bg-zinc-50 transition-colors font-medium">
+                           class="inline-flex items-center px-8 py-4 border border-brand-orange/20 text-gray-900 rounded hover:bg-brand-orange/5 transition-colors font-medium">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                             </svg>
@@ -125,24 +122,26 @@ $contact_defaults = [
                 </div>
 
                 <!-- Преимущества -->
-                <div class="grid md:grid-cols-3 gap-6">
-                    <?php for ($i = 1; $i <= 3; $i++) : 
-                        $default_advantage = $hero_defaults['advantages'][$i];
-                    ?>
-                        <div class="bg-white rounded p-6 border border-zinc-200">
-                            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                                <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <?php foreach ($hero_defaults['advantages'] as $advantage): ?>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 rounded-full bg-brand-orange/10 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
                             </div>
-                            <h3 class="text-zinc-900 font-bold mb-2">
-                                <?php echo esc_html(get_theme_mod("hero_advantage_{$i}_title", $default_advantage['title'])); ?>
-                            </h3>
-                            <p class="text-zinc-600 text-sm">
-                                <?php echo esc_html(get_theme_mod("hero_advantage_{$i}_text", $default_advantage['text'])); ?>
-                            </p>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2 hover:text-brand-orange transition-colors">
+                                    <?php echo esc_html($advantage['title']); ?>
+                                </h3>
+                                <p class="text-gray-600">
+                                    <?php echo esc_html($advantage['text']); ?>
+                                </p>
+                            </div>
                         </div>
-                    <?php endfor; ?>
+                    <?php endforeach; ?>
                 </div>
             </div>
 
@@ -165,27 +164,35 @@ $contact_defaults = [
 <section class="container mx-auto px-4 mb-8">
     <div class="bg-white rounded-xl border border-zinc-100 p-8">
         <div class="flex flex-col md:flex-row gap-4 mb-6">
-            <div class="flex-1">
-                <input type="text" 
-                    placeholder="Введите категорию или название детали" 
-                    class="w-full px-4 py-3 rounded-lg border border-zinc-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-colors">
-            </div>
-            <button class="bg-orange-600 text-white px-8 py-3 rounded-lg hover:bg-orange-700 transition-colors flex items-center justify-center whitespace-nowrap">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                </svg>
-                Найти запчасть
-            </button>
+            <form role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" class="flex flex-col md:flex-row gap-4 flex-1">
+                <div class="flex-1">
+                    <input type="search" 
+                        name="s"
+                        placeholder="Введите категорию или название детали" 
+                        class="w-full px-4 py-3 rounded-lg border border-zinc-200 focus:border-brand-orange focus:outline-none focus:ring-0 transition-colors">
+                </div>
+                <button type="submit" 
+                    class="bg-brand-orange text-white px-8 py-3 rounded-lg hover:bg-brand-orange-dark transition-colors flex items-center justify-center whitespace-nowrap">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    Найти запчасть
+                </button>
+            </form>
         </div>
         <div class="flex flex-wrap gap-2">
             <span class="text-sm text-zinc-500">Популярные запросы:</span>
-            <a href="#" class="text-sm text-orange-600 hover:text-orange-700">Подшипник 6204</a>
+            <a href="<?php echo esc_url(add_query_arg('s', 'Подшипник 6204', home_url('/'))); ?>" 
+                class="text-sm text-brand-orange hover:text-brand-orange-dark">Подшипник 6204</a>
             <span class="text-zinc-300">•</span>
-            <a href="#" class="text-sm text-orange-600 hover:text-orange-700">Трос D15</a>
+            <a href="<?php echo esc_url(add_query_arg('s', 'Трос D15', home_url('/'))); ?>" 
+                class="text-sm text-brand-orange hover:text-brand-orange-dark">Трос D15</a>
             <span class="text-zinc-300">•</span>
-            <a href="#" class="text-sm text-orange-600 hover:text-orange-700">Анкер M24</a>
+            <a href="<?php echo esc_url(add_query_arg('s', 'Анкер M24', home_url('/'))); ?>" 
+                class="text-sm text-brand-orange hover:text-brand-orange-dark">Анкер M24</a>
             <span class="text-zinc-300">•</span>
-            <a href="#" class="text-sm text-orange-600 hover:text-orange-700">Гидроцилиндр HC-200</a>
+            <a href="<?php echo esc_url(add_query_arg('s', 'Гидроцилиндр HC-200', home_url('/'))); ?>" 
+                class="text-sm text-brand-orange hover:text-brand-orange-dark">Гидроцилиндр HC-200</a>
         </div>
     </div>
     
@@ -239,20 +246,20 @@ $contact_defaults = [
         // Функция для безопасного получения ссылки
         function get_safe_term_link($term_name, $taxonomy) {
             $term = get_term_by('name', $term_name, $taxonomy);
-            return ($term && !is_wp_error($term)) ? get_term_link($term) : home_url('/wp/parts/');
+            return ($term && !is_wp_error($term)) ? get_term_link($term) : home_url('/new/catalog/');
         }
         ?>
 
         <!-- Гавна каточка каталога -->
         <div class="col-span-12 lg:col-span-8 row-span-2">
-            <div class="bg-gradient-to-br from-orange-600 to-orange-700 rounded-2xl p-8 h-full relative overflow-hidden group">
+            <div class="bg-gradient-to-br from-brand-orange to-brand-orange-dark rounded-2xl p-8 h-full relative overflow-hidden group">
                 <div class="relative z-10">
                     <h2 class="text-4xl font-bold text-white mb-4">Каталог запчастей</h2>
                     <p class="text-white/80 text-lg mb-8 max-w-xl">
                         Более 10 000 наименованй запчастей для башенных кранов в наличии и под заказ
                     </p>
-                    <a href="<?php echo home_url('/wp/parts/'); ?>" 
-                       class="inline-flex items-center bg-white text-orange-600 px-6 py-3 rounded-lg font-medium group-hover:bg-orange-50 transition-colors">
+                    <a href="<?php echo home_url('/new/catalog'); ?>" 
+                       class="inline-flex items-center bg-white text-brand-orange px-6 py-3 rounded-lg font-medium hover:bg-zinc-900 hover:text-white transition-colors">
                         Перейти в каталог
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -275,7 +282,7 @@ $contact_defaults = [
                     <!-- Заголовок и бейдж -->
                     <div class="flex items-start justify-between mb-6">
                         <h3 class="text-3xl font-bold text-white">Zoomlion</h3>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-600/10 text-orange-400 border border-orange-600/20">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-brand-orange/10 text-brand-orange-dark border border-brand-orange/20">
                             Официальный поставщик
                         </span>
                     </div>
@@ -287,8 +294,8 @@ $contact_defaults = [
 
                     <!-- Кнопка -->
                     <div class="mt-8">
-                        <a href="<?php echo add_query_arg(['manufacturer' => 'zoomlion'], home_url('/wp/parts/')); ?>" 
-                           class="inline-flex items-center text-white group-hover:text-orange-400 transition-colors">
+                        <a href="<?php echo add_query_arg(['manufacturer' => 'zoomlion'], home_url('/new/catalog/')); ?>" 
+                           class="inline-flex items-center text-white group-hover:text-brand-orange transition-colors">
                             <span class="font-medium">Подробнее</span>
                             <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" 
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -303,19 +310,19 @@ $contact_defaults = [
         <!-- Категории в новом дизайне -->
         <?php foreach ($categories_data as $name => $data) : ?>
             <div class="col-span-12 md:col-span-6 lg:col-span-4">
-                <div class="bg-white rounded-xl border border-zinc-100 h-full group hover:border-orange-200 transition-colors">
+                <div class="bg-white rounded-xl border border-zinc-100 h-full group hover:border-brand-orange transition-colors">
                     <!-- Контент -->
                     <div class="p-6 flex flex-col h-full">
                         <!-- Верхняя часть с иконкой и описанием -->
                         <div class="mb-auto">
                             <div class="flex items-start space-x-4 mb-4">
-                                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                    <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="w-12 h-12 bg-brand-orange/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo $data['icon']; ?>"/>
                                     </svg>
                                 </div>
                                 <div class="flex-grow">
-                                    <h3 class="text-xl font-bold text-zinc-900 mb-2">
+                                    <h3 class="text-xl font-bold text-zinc-900 mb-2 hover:text-brand-orange transition-colors">
                                         <?php echo $name; ?>
                                     </h3>
                                     <p class="text-zinc-600 text-sm">
@@ -328,16 +335,23 @@ $contact_defaults = [
                         <!-- Нижняя часть с кнопкой и счетчиком -->
                         <div class="flex items-center justify-between pt-4">
                             <a href="<?php echo home_url('/new/parts/?product_cat=' . sanitize_title($name) . '&filter=category'); ?>" 
-                               class="inline-flex items-center text-orange-600 font-medium group-hover:text-orange-700">
+                               class="inline-flex items-center text-brand-orange font-medium group-hover:text-brand-orange-dark">
                                 Смотреть все
                                 <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" 
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                 </svg>
                             </a>
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-600">
-                                11 позиций
+                            <?php
+                            $category = get_term_by('name', $name, 'product_cat');
+                            if ($category) {
+                                $count = $category->count;
+                                $text = $count . ' ' . get_russian_plural($count, 'позиция', 'позиции', 'позиций');
+                            ?>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-brand-orange/10 text-brand-orange">
+                                <?php echo esc_html($text); ?>
                             </span>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -350,7 +364,7 @@ $contact_defaults = [
             if ($data['name'] !== 'Zoomlion') :
         ?>
             <div class="col-span-12 md:col-span-6 lg:col-span-4">
-                <div class="bg-white rounded-xl p-6 border border-zinc-100 h-full group">
+                <div class="bg-white rounded-xl p-6 border border-zinc-100 h-full group hover:border-brand-orange transition-colors">
                     <div class="mb-4">
                         <h3 class="text-2xl font-bold text-zinc-900"><?php echo esc_html($data['name']); ?></h3>
                     </div>
@@ -369,8 +383,8 @@ $contact_defaults = [
                         </div>
                     </div>
                     
-                    <a href="<?php echo add_query_arg(['manufacturer' => $slug], home_url('/wp/parts/')); ?>" 
-                       class="inline-flex items-center text-orange-600 font-medium group-hover:text-orange-700">
+                    <a href="<?php echo add_query_arg(['manufacturer' => $slug], home_url('/new/catalog/')); ?>" 
+                       class="inline-flex items-center text-brand-orange font-medium group-hover:text-brand-orange-dark">
                         Перейти в каталог
                         <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" 
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -394,8 +408,8 @@ $contact_defaults = [
             <!-- Левая колонка с контентом -->
             <div>
                 <div class="inline-flex items-center space-x-2 mb-4">
-                    <div class="w-12 h-1 bg-orange-600 rounded-full"></div>
-                    <span class="text-orange-600 font-medium">О компании</span>
+                    <div class="w-12 h-1 bg-brand-orange rounded-full"></div>
+                    <span class="text-brand-orange font-medium">О компании</span>
                 </div>
                 
                 <h2 class="text-4xl font-bold text-zinc-900 mb-6">
@@ -417,35 +431,35 @@ $contact_defaults = [
                 <!-- Ключевые показатели в строку -->
                 <div class="flex flex-wrap gap-8 mb-8">
                     <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                            <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-brand-orange/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </div>
                         <div>
-                            <div class="text-2xl font-bold text-orange-500">10+</div>
+                            <div class="text-2xl font-bold text-brand-orange">10+</div>
                             <div class="text-sm text-zinc-500">лет опыта</div>
                         </div>
                     </div>
                     <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                            <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-brand-orange/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                             </svg>
                         </div>
                         <div>
-                            <div class="text-2xl font-bold text-orange-500">1000+</div>
+                            <div class="text-2xl font-bold text-brand-orange">1000+</div>
                             <div class="text-sm text-zinc-500">клиентов</div>
                         </div>
                     </div>
                     <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                            <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-brand-orange/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                             </svg>
                         </div>
                         <div>
-                            <div class="text-2xl font-bold text-orange-500">100%</div>
+                            <div class="text-2xl font-bold text-brand-orange">100%</div>
                             <div class="text-sm text-zinc-500">гарантия</div>
                         </div>
                     </div>
@@ -453,7 +467,7 @@ $contact_defaults = [
 
                 <!-- Кнопки действий -->
                 <div class="flex flex-wrap gap-4">
-                    <a href="/about/" class="inline-flex items-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                    <a href="/new/about/" class="inline-flex items-center px-6 py-3 bg-brand-orange text-white rounded-lg hover:bg-brand-orange-dark transition-colors">
                         <span class="font-medium">Подробнее о компании</span>
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -487,8 +501,8 @@ $contact_defaults = [
         <div class="grid md:grid-cols-3 gap-8">
             <!-- Оригинальные запчасти -->
             <div class="bg-white rounded-xl p-6 border border-zinc-100">
-                <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-7 h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-14 h-14 bg-brand-orange/10 rounded-xl flex items-center justify-center mb-6">
+                    <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                     </svg>
                 </div>
@@ -496,13 +510,13 @@ $contact_defaults = [
                 <p class="text-zinc-600">Прямые поставки от производителей. Гарантия полинности и качества каждой детали.</p>
                 <ul class="mt-4 space-y-2">
                     <li class="flex items-center text-sm text-zinc-600">
-                        <svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-brand-orange mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                         Сертификаты качества
                     </li>
                     <li class="flex items-center text-sm text-zinc-600">
-                        <svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-brand-orange mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                         Гарантия производителя
@@ -512,8 +526,8 @@ $contact_defaults = [
 
             <!-- Техническая поддержка -->
             <div class="bg-white rounded-xl p-6 border border-zinc-100">
-                <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-7 h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-14 h-14 bg-brand-orange/10 rounded-xl flex items-center justify-center mb-6">
+                    <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
                 </div>
@@ -521,13 +535,13 @@ $contact_defaults = [
                 <p class="text-zinc-600">Квалифицированные специалисты помогут подобрать необходимые запчасти и ответят на все вопросы.</p>
                 <ul class="mt-4 space-y-2">
                     <li class="flex items-center text-sm text-zinc-600">
-                        <svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-brand-orange mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                         Консультации 24/7
                     </li>
                     <li class="flex items-center text-sm text-zinc-600">
-                        <svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-brand-orange mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                         Помощь в подборе
@@ -537,8 +551,8 @@ $contact_defaults = [
 
             <!-- Удобная логистика -->
             <div class="bg-white rounded-xl p-6 border border-zinc-100">
-                <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-7 h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-14 h-14 bg-brand-orange/10 rounded-xl flex items-center justify-center mb-6">
+                    <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                     </svg>
                 </div>
@@ -546,13 +560,13 @@ $contact_defaults = [
                 <p class="text-zinc-600">Быстрая доставка в любой регион России. Собственный склад запчастей в Москве.</p>
                 <ul class="mt-4 space-y-2">
                     <li class="flex items-center text-sm text-zinc-600">
-                        <svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-brand-orange mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                         Доставка по России
                     </li>
                     <li class="flex items-center text-sm text-zinc-600">
-                        <svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-brand-orange mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                         Отправка в день заказа
@@ -569,8 +583,8 @@ $contact_defaults = [
         <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
             <div>
                 <div class="inline-flex items-center space-x-2 mb-4">
-                    <div class="w-12 h-1 bg-orange-600 rounded-full"></div>
-                    <span class="text-orange-600 font-medium">Наш блог</span>
+                    <div class="w-12 h-1 bg-brand-orange rounded-full"></div>
+                    <span class="text-brand-orange font-medium">Наш блог</span>
                 </div>
                 <h2 class="text-3xl font-bold text-zinc-900 mb-3">Экспертные статьи и новости</h2>
                 <p class="text-zinc-600 max-w-2xl">
@@ -605,13 +619,13 @@ $contact_defaults = [
                         </svg>
                         15.03.2024
                     </div>
-                    <h3 class="text-xl font-bold text-zinc-900 mb-3 group-hover:text-orange-600 transition-colors">
+                    <h3 class="text-xl font-bold text-zinc-900 mb-3 group-hover:text-brand-orange transition-colors">
                         <a href="#">Как продлить срок службы башенного крана: 10 ключевых правил</a>
                     </h3>
                     <p class="text-zinc-600 mb-4">
                         Регулярное обслуживание и своевременная замена запчастей позволяют значительно увеличить срок эксплуатации башенного крана...
                     </p>
-                    <a href="#" class="inline-flex items-center text-orange-600 font-medium group-hover:text-orange-700">
+                    <a href="#" class="inline-flex items-center text-brand-orange font-medium group-hover:text-brand-orange-dark">
                         Читать далее
                         <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" 
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -640,13 +654,13 @@ $contact_defaults = [
                         </svg>
                         10.03.2024
                         </div>
-                    <h3 class="text-xl font-bold text-zinc-900 mb-3 group-hover:text-orange-600 transition-colors">
+                    <h3 class="text-xl font-bold text-zinc-900 mb-3 group-hover:text-brand-orange transition-colors">
                         <a href="#">Zoomlion представил новую линейку башенных кранов на выставке Bauma 2024</a>
                         </h3>
                     <p class="text-zinc-600 mb-4">
                         Компания Zoomlion представила инновационные решения в области башенных кранов на международной выставке строительной техники...
                     </p>
-                    <a href="#" class="inline-flex items-center text-orange-600 font-medium group-hover:text-orange-700">
+                    <a href="#" class="inline-flex items-center text-brand-orange font-medium group-hover:text-brand-orange-dark">
                         Читать далее
                         <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" 
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -675,13 +689,13 @@ $contact_defaults = [
                         </svg>
                         05.03.2024
                     </div>
-                    <h3 class="text-xl font-bold text-zinc-900 mb-3 group-hover:text-orange-600 transition-colors">
+                    <h3 class="text-xl font-bold text-zinc-900 mb-3 group-hover:text-brand-orange transition-colors">
                         <a href="#">Подбор запчастей для башенного крана: полное руководство</a>
                     </h3>
                     <p class="text-zinc-600 mb-4">
                         Пошаговая инструкция по определению необходимых запчастей, проверке совместимости и оформлению заказа...
                     </p>
-                    <a href="#" class="inline-flex items-center text-orange-600 font-medium group-hover:text-orange-700">
+                    <a href="#" class="inline-flex items-center text-brand-orange font-medium group-hover:text-brand-orange-dark">
                         Читать далее
                         <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" 
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -700,40 +714,40 @@ $contact_defaults = [
         <!-- Варианты поиска -->
         <div class="grid md:grid-cols-3 gap-6 mt-6">
             <!-- Поиск по каталогу -->
-            <a href="/catalog/" class="group">
-                <div class="bg-white rounded-xl border border-zinc-100 p-6 h-full hover:border-orange-200 transition-colors">
-                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="/new/catalog/" class="group">
+                <div class="bg-white rounded-xl border border-zinc-100 p-6 h-full hover:border-brand-orange transition-colors">
+                    <div class="w-12 h-12 bg-brand-orange/10 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-zinc-900 mb-2 group-hover:text-orange-600 transition-colors">Каталог запчастей</h3>
+                    <h3 class="font-bold text-zinc-900 mb-2 group-hover:text-brand-orange transition-colors">Каталог запчастей</h3>
                     <p class="text-sm text-zinc-600">Поиск по категориям и производителям</p>
                 </div>
             </a>
 
             <!-- Поиск по модели -->
             <a href="/models/" class="group">
-                <div class="bg-white rounded-xl border border-zinc-100 p-6 h-full hover:border-orange-200 transition-colors">
-                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white rounded-xl border border-zinc-100 p-6 h-full hover:border-brand-orange transition-colors">
+                    <div class="w-12 h-12 bg-brand-orange/10 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-zinc-900 mb-2 group-hover:text-orange-600 transition-colors">Подбор по модели</h3>
+                    <h3 class="font-bold text-zinc-900 mb-2 group-hover:text-brand-orange transition-colors">Подбор по модели</h3>
                     <p class="text-sm text-zinc-600">Поиск по производителю и модели крана</p>
                 </div>
             </a>
 
             <!-- Консультация -->
             <a href="#contacts" class="group">
-                <div class="bg-white rounded-xl border border-zinc-100 p-6 h-full hover:border-orange-200 transition-colors">
-                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white rounded-xl border border-zinc-100 p-6 h-full hover:border-brand-orange transition-colors">
+                    <div class="w-12 h-12 bg-brand-orange/10 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-zinc-900 mb-2 group-hover:text-orange-600 transition-colors">Консультация</h3>
+                    <h3 class="font-bold text-zinc-900 mb-2 group-hover:text-brand-orange transition-colors">Консультация</h3>
                     <p class="text-sm text-zinc-600">Помощь специалиста в подборе запчастей</p>
                 </div>
             </a>
@@ -814,10 +828,10 @@ $contact_defaults = [
                         <div class="bg-white rounded-lg shadow-sm border border-zinc-100">
                             <button class="w-full text-left px-6 py-4 focus:outline-none group" onclick="toggleFAQ(this)">
                                 <div class="flex items-center justify-between">
-                                    <h3 class="text-lg font-medium text-zinc-900 group-hover:text-orange-600">
+                                    <h3 class="text-lg font-medium text-zinc-900 group-hover:text-brand-orange">
                                         <?php echo esc_html($faq['question']); ?>
                                     </h3>
-                                    <svg class="w-5 h-5 text-zinc-500 transform transition-transform group-hover:text-orange-600" 
+                                    <svg class="w-5 h-5 text-zinc-500 transform transition-transform group-hover:text-brand-orange" 
                                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                     </svg>
@@ -838,10 +852,10 @@ $contact_defaults = [
                         <div class="bg-white rounded-lg shadow-sm border border-zinc-100">
                             <button class="w-full text-left px-6 py-4 focus:outline-none group" onclick="toggleFAQ(this)">
                                 <div class="flex items-center justify-between">
-                                    <h3 class="text-lg font-medium text-zinc-900 group-hover:text-orange-600">
+                                    <h3 class="text-lg font-medium text-zinc-900 group-hover:text-brand-orange">
                                         <?php echo esc_html($faq['question']); ?>
                                     </h3>
-                                    <svg class="w-5 h-5 text-zinc-500 transform transition-transform group-hover:text-orange-600" 
+                                    <svg class="w-5 h-5 text-zinc-500 transform transition-transform group-hover:text-brand-orange" 
                                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                     </svg>
@@ -864,8 +878,8 @@ $contact_defaults = [
         <!-- Заголовок секции -->
         <div class="max-w-2xl mx-auto text-center mb-12">
             <div class="inline-flex items-center space-x-2 mb-4">
-                <div class="w-12 h-1 bg-orange-600 rounded-full"></div>
-                <span class="text-orange-600 font-medium">Контакты</span>
+                <div class="w-12 h-1 bg-brand-orange rounded-full"></div>
+                <span class="text-brand-orange font-medium">Контакты</span>
             </div>
             <h2 class="text-3xl font-bold text-zinc-900 mb-4">
                 <?php echo esc_html(get_theme_mod('contact_form_title', $contact_defaults['title'])); ?>
@@ -882,15 +896,15 @@ $contact_defaults = [
                     <div class="space-y-6">
                         <!-- Телефон -->
                         <div class="flex items-start space-x-4">
-                            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-10 h-10 bg-brand-orange/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                                 </svg>
                             </div>
                             <div>
                                 <h4 class="font-medium text-zinc-900 mb-1">Телефон</h4>
                                 <a href="tel:<?php echo esc_attr(get_theme_mod('contact_phone', $contact_defaults['phone'])); ?>" 
-                                   class="text-zinc-600 hover:text-orange-600 transition-colors">
+                                   class="text-zinc-600 hover:text-brand-orange transition-colors">
                                     <?php echo esc_html(get_theme_mod('contact_phone', $contact_defaults['phone'])); ?>
                                 </a>
                             </div>
@@ -898,15 +912,15 @@ $contact_defaults = [
 
                         <!-- Email -->
                         <div class="flex items-start space-x-4">
-                            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-10 h-10 bg-brand-orange/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
                             </div>
                             <div>
                                 <h4 class="font-medium text-zinc-900 mb-1">Email</h4>
                                 <a href="mailto:<?php echo esc_attr(get_theme_mod('contact_email', $contact_defaults['email'])); ?>"
-                                   class="text-zinc-600 hover:text-orange-600 transition-colors">
+                                   class="text-zinc-600 hover:text-brand-orange transition-colors">
                                     <?php echo esc_html(get_theme_mod('contact_email', $contact_defaults['email'])); ?>
                                 </a>
                             </div>
@@ -914,8 +928,8 @@ $contact_defaults = [
 
                         <!-- Адрес -->
                         <div class="flex items-start space-x-4">
-                            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-10 h-10 bg-brand-orange/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
@@ -937,14 +951,14 @@ $contact_defaults = [
                             <div>
                                 <label class="block text-sm font-medium text-zinc-700 mb-1.5">Ваше имя</label>
                                 <input type="text" 
-                                       class="w-full px-4 py-3 rounded-lg border border-zinc-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-colors" 
+                                       class="w-full px-4 py-3 rounded-lg border border-zinc-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange transition-colors" 
                                        placeholder="Иван Иванов"
                                        required>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-zinc-700 mb-1.5">Телефон</label>
                                 <input type="tel" 
-                                       class="w-full px-4 py-3 rounded-lg border border-zinc-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-colors" 
+                                       class="w-full px-4 py-3 rounded-lg border border-zinc-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange transition-colors" 
                                        placeholder="+7 (___) ___-__-__"
                                        required>
                             </div>
@@ -952,11 +966,11 @@ $contact_defaults = [
                         <div>
                             <label class="block text-sm font-medium text-zinc-700 mb-1.5">Сообщение</label>
                             <textarea rows="4" 
-                                      class="w-full px-4 py-3 rounded-lg border border-zinc-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-colors resize-none"
+                                      class="w-full px-4 py-3 rounded-lg border border-zinc-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange transition-colors resize-none"
                                       placeholder="Опишите ваш заказ..."></textarea>
                         </div>
                         <button type="submit" 
-                                class="w-full bg-orange-600 text-white py-3 px-6 rounded-lg hover:bg-orange-700 transition-colors">
+                                class="w-full bg-brand-orange text-white py-3 px-6 rounded-lg hover:bg-brand-orange-dark transition-colors">
                             Отправить сообщение
                         </button>
                     </form>

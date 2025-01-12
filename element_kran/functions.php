@@ -1,8 +1,10 @@
 <?php
-ob_start();
-if (!session_id()) {
-    session_start();
-}
+// Подключаем все необходимые файлы
+require_once get_template_directory() . '/inc/setup.php';
+require_once get_template_directory() . '/inc/customizer.php';
+require_once get_template_directory() . '/inc/woocommerce.php';
+require_once get_template_directory() . '/inc/filters.php';
+require_once get_template_directory() . '/inc/helpers.php';
 
 if (!defined('ABSPATH')) {
     exit;
@@ -27,6 +29,7 @@ function crane_parts_menus() {
     register_nav_menus(array(
         'primary' => __('Главное меню', 'crane-parts'),
         'footer' => __('Меню в подвале', 'crane-parts'),
+        'catalog_menu' => __('Меню каталога', 'crane-parts'),
     ));
 }
 add_action('init', 'crane_parts_menus');
@@ -654,6 +657,128 @@ function crane_parts_customize_register($wp_customize) {
     if ($wp_customize->is_preview() && !is_admin()) {
         add_action('wp_footer', 'crane_parts_spacing_customize_preview', 21);
     }
+
+    // Добавляем секцию для меню каталога
+    $wp_customize->add_section('catalog_menu_section', array(
+        'title' => 'Меню каталога',
+        'priority' => 35,
+    ));
+
+    // Массив пунктов меню по умолчанию
+    $default_menu_items = array(
+        'item1' => array(
+            'title' => 'Механизмы подъема',
+            'url' => '#'
+        ),
+        'item2' => array(
+            'title' => 'Электрооборудование',
+            'url' => '#'
+        ),
+        'item3' => array(
+            'title' => 'Тормозная система',
+            'url' => '#'
+        ),
+        'item4' => array(
+            'title' => 'Кабины и пульты',
+            'url' => '#'
+        ),
+        'item5' => array(
+            'title' => 'Металлоконструкции',
+            'url' => '#'
+        )
+    );
+
+    // Добавляем настройки для каждого пункта меню
+    foreach ($default_menu_items as $key => $item) {
+        // Название пункта меню
+        $wp_customize->add_setting("catalog_menu_{$key}_title", array(
+            'default' => $item['title'],
+            'sanitize_callback' => 'sanitize_text_field',
+        ));
+
+        $wp_customize->add_control("catalog_menu_{$key}_title", array(
+            'label' => "Название пункта меню " . ($key[4]),
+            'section' => 'catalog_menu_section',
+            'type' => 'text',
+        ));
+
+        // URL пункта меню
+        $wp_customize->add_setting("catalog_menu_{$key}_url", array(
+            'default' => $item['url'],
+            'sanitize_callback' => 'esc_url_raw',
+        ));
+
+        $wp_customize->add_control("catalog_menu_{$key}_url", array(
+            'label' => "Ссылка пункта меню " . ($key[4]),
+            'section' => 'catalog_menu_section',
+            'type' => 'url',
+        ));
+    }
+
+    // Добавляем секцию для навигации
+    $wp_customize->add_section('navigation_settings', array(
+        'title' => 'Настройки навигации',
+        'priority' => 35,
+    ));
+
+    // Настройки для кнопки "Каталог"
+    $wp_customize->add_setting('catalog_button_text', array(
+        'default' => 'КАТАЛОГ',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('catalog_button_text', array(
+        'label' => 'Текст кнопки "Каталог"',
+        'section' => 'navigation_settings',
+        'type' => 'text',
+    ));
+
+    // Обновляем дефолтное значение для URL кнопки каталога
+    $wp_customize->add_setting('catalog_button_url', array(
+        'default' => '/new/catalog',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control('catalog_button_url', array(
+        'label' => 'Ссылка кнопки "Каталог"',
+        'section' => 'navigation_settings',
+        'type' => 'url',
+    ));
+
+    // Настройки для кнопки "Быстрый заказ"
+    $wp_customize->add_setting('quick_order_text', array(
+        'default' => 'Быстрый заказ',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('quick_order_text', array(
+        'label' => 'Текст кнопки "Быстрый заказ"',
+        'section' => 'navigation_settings',
+        'type' => 'text',
+    ));
+
+    $wp_customize->add_setting('quick_order_url', array(
+        'default' => '#',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control('quick_order_url', array(
+        'label' => 'Ссылка кнопки "Быстрый заказ"',
+        'section' => 'navigation_settings',
+        'type' => 'url',
+    ));
+
+    // Настройки для кнопки "Корзина"
+    $wp_customize->add_setting('cart_url', array(
+        'default' => '#',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control('cart_url', array(
+        'label' => 'Ссылка корзины',
+        'section' => 'navigation_settings',
+        'type' => 'url',
+    ));
 }
 
 // Функция для живого предпросмотра
@@ -1406,13 +1531,14 @@ class Primary_Menu_Walker extends Walker_Nav_Menu {
 
 // Кастомный walker для меню каталога
 class Catalog_Menu_Walker extends Walker_Nav_Menu {
-    function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0) {
-        $output .= '<a href="' . $item->url . '" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">';
-        $output .= '<svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-        </svg>';
-        $output .= '<span class="text-gray-700">' . $item->title . '</span>';
-        $output .= '</a>';
+    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        $output .= sprintf(
+            '<a href="%s" class="group relative px-5 py-3.5 text-white hover:bg-brand-orange-dark transition-colors">
+                <span class="font-medium whitespace-nowrap text-sm uppercase">%s</span>
+            </a>',
+            esc_url($item->url),
+            esc_html($item->title)
+        );
     }
 }
 
@@ -1511,7 +1637,7 @@ function redirect_product_category_to_catalog() {
         $category = get_queried_object();
         
         // Формируем URL для страницы parts с фильтром
-        $catalog_url = home_url('/new/parts/');
+        $catalog_url = home_url('/catalog/');
         $redirect_url = add_query_arg(array(
             'product_cat' => $category->slug,
             'filter' => 'category'
@@ -1536,7 +1662,7 @@ function modify_product_category_links($url, $term, $taxonomy) {
     }
 
     if ($taxonomy === 'product_cat') {
-        $catalog_url = home_url('/new/parts/');
+        $catalog_url = home_url('/catalog/');
         return add_query_arg(array(
             'product_cat' => $term->slug,
             'filter' => 'category'
@@ -1558,7 +1684,7 @@ function disable_single_product_pages() {
     }
 
     if (is_singular('product')) {
-        wp_redirect(home_url('/new/catalog/parts/'));
+        wp_redirect(home_url('/new/catalog/'));
         exit();
     }
 }
@@ -1947,6 +2073,20 @@ function enqueue_custom_styles() {
             }
         }
     ');
+
+    wp_add_inline_style('crane-parts-theme', '
+        .btn-primary {
+            background-color: #f38e19;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #e07d08;
+        }
+    ');
 }
 add_action("wp_enqueue_scripts", "enqueue_custom_styles");
 
@@ -1985,3 +2125,24 @@ function add_faq_script() {
     ');
 }
 add_action('wp_enqueue_scripts', 'add_faq_script');
+
+// Функция для правильного склонения слов
+function get_russian_plural($number, $one, $two, $five) {
+    $number = abs($number);
+    $number = $number % 100;
+    
+    if ($number >= 11 && $number <= 19) {
+        return $five;
+    }
+    
+    $number = $number % 10;
+    
+    if ($number == 1) {
+        return $one;
+    }
+    if ($number >= 2 && $number <= 4) {
+        return $two;
+    }
+    
+    return $five;
+}

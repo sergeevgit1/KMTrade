@@ -1,7 +1,7 @@
 <?php
 // Перенаправляем на страницу parts
 $category = get_queried_object();
-$catalog_url = home_url('/catalog/parts/');
+$catalog_url = home_url('/catalog');
 $redirect_url = add_query_arg(array(
     'product_cat' => $category->slug,
     'filter' => 'category'

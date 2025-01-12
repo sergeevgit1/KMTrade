@@ -1,0 +1,118 @@
+// Переменные
+$footer-bg-start: #1a1a1a;
+$footer-bg-end: #2d2d2d;
+$footer-text: #ffffff;
+$footer-accent: #ffd700;
+$footer-link: rgba(255, 255, 255, 0.75);
+$footer-border: rgba(255, 255, 255, 0.1);
+
+.site-footer {
+  background: linear-gradient(to right, $footer-bg-start, $footer-bg-end);
+  color: $footer-text;
+  padding: 3rem 0;
+
+  h4 {
+    color: $footer-text;
+    font-size: 1.25rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+
+    &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 3px;
+      background: $footer-accent;
+    }
+  }
+
+  .list-unstyled {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: flex-start;
+
+      i {
+        color: $footer-accent;
+        width: 20px;
+        margin-right: 10px;
+        margin-top: 4px;
+      }
+    }
+  }
+
+  .footer-link {
+    color: $footer-link;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+
+    i {
+      font-size: 12px;
+      margin-right: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      color: $footer-accent;
+
+      i {
+        transform: translateX(3px);
+      }
+    }
+
+    span {
+      font-size: 14px;
+    }
+  }
+
+  hr {
+    border-color: $footer-border;
+    margin: 2rem 0;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: $footer-text;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: $footer-accent;
+        color: $footer-bg-start;
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  // Адаптивность
+  @media (max-width: 768px) {
+    .social-links {
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .text-md-right {
+      text-align: center;
+    }
+  }
+}

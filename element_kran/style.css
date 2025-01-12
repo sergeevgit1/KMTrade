@@ -22,7 +22,7 @@ Text Domain: crane-parts
 #quick-order-form button {
   width: 100%;
   padding: 10px;
-  background: #f97316;
+  background: #f38e19;
   color: white;
   border: none;
   border-radius: 5px;
@@ -30,11 +30,11 @@ Text Domain: crane-parts
 }
 
 #quick-order-form button:hover {
-  background: #ea580c;
+  background: #e07d08;
 }
 
 #quick-order-form input:focus,
 #quick-order-form textarea:focus {
-  border-color: #f97316;
-  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+  border-color: #f38e19;
+  box-shadow: 0 0 0 2px rgba(243, 142, 25, 0.2);
 }

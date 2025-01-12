@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </svg>
                         Связаться с нами
                     </a>
-                    <a href="/wp/parts/" 
+                    <a href="/new/catalog/" 
                        class="inline-flex items-center px-6 py-3 bg-white text-gray-900 rounded-lg hover:bg-gray-50 transition-colors">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
