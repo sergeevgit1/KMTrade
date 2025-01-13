@@ -3,6 +3,32 @@
 Template Name: Каталог запчастей
 */
 
+// Получаем поисковый запрос из параметра
+$search_query = isset($_GET['table-search']) ? sanitize_text_field($_GET['table-search']) : '';
+
+// Модифицируем аргументы запроса WP_Query
+$args = array(
+    'post_type' => 'product',
+    'posts_per_page' => 12,
+    'paged' => get_query_var('paged') ? get_query_var('paged') : 1,
+);
+
+// Если есть поисковый запрос, добавляем его в аргументы
+if (!empty($search_query)) {
+    $args['s'] = $search_query;
+}
+
+// Выводим форму поиска с текущим значением
+if (!empty($search_query)) : ?>
+    <div class="mb-6">
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+            <p class="text-gray-600">
+                Результаты поиска по запросу: <strong><?php echo esc_html($search_query); ?></strong>
+            </p>
+        </div>
+    </div>
+<?php endif;
+
 get_header();
 ?>
 
@@ -39,5 +65,20 @@ get_header();
     <!-- Фильтры и список товаров -->
     <?php get_template_part('template-parts/catalog/filters'); ?>
 </main>
+
+<!-- В JavaScript части -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('table-search');
+    
+    // Если есть поисковый запрос, заполняем поле поиска и запускаем фильтрацию
+    <?php if (!empty($search_query)) : ?>
+    searchInput.value = '<?php echo esc_js($search_query); ?>';
+    filterTable(); // Запускаем фильтрацию сразу после загрузки
+    <?php endif; ?>
+    
+    // Остальной код JavaScript...
+});
+</script>
 
 <?php get_footer(); ?> 

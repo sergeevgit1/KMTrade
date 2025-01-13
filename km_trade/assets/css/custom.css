@@ -267,3 +267,87 @@ body {
   opacity: 0;
   transition: opacity 200ms ease-in;
 }
+
+/* Скрываем шаги оформления заказа на главной странице для мобильных и планшетов */
+.home .order-steps {
+  @media (max-width: 1023px) {
+    /* lg breakpoint в Tailwind */
+    display: none;
+  }
+}
+
+/* или если используете Tailwind классы, добавьте в HTML: */
+/* class="order-steps lg:block hidden" */
+
+/* Стили для слайдера блога */
+.blog-slider .swiper-pagination {
+  position: relative;
+  bottom: 0;
+}
+
+.blog-slider .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #e5e7eb;
+  opacity: 1;
+}
+
+.blog-slider .swiper-pagination-bullet-active {
+  background: #f38d19;
+}
+
+.blog-slider .swiper-slide {
+  height: auto;
+}
+
+/* Стили для формы поиска */
+.search-form {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.search-form input[type="search"] {
+  border-right: none;
+}
+
+.search-form input[type="search"]:focus {
+  box-shadow: none;
+}
+
+.search-form button[type="submit"] {
+  white-space: nowrap;
+}
+
+/* Адаптивные стили для мобильных устройств */
+@media (max-width: 640px) {
+  .search-form button[type="submit"] {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Стили для формы поиска в шапке */
+.header-search .search-form {
+  max-width: none;
+}
+
+.header-search .search-form input[type="search"] {
+  padding-left: 3rem; /* Место для иконки */
+}
+
+.header-search .search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 640px) {
+  .header-search .search-form button[type="submit"] {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
